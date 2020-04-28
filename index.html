@@ -66,13 +66,12 @@
             newBox = $(boxSelected).closest('.box').next();
           } else if(e.keyCode == 37) {
             newBox = $(boxSelected).prev();
-          } else {
+          } else if(e.keyCode == 38) {
             const list = navigateList(boxSelected, -1);
             newBox = $(list).find('.box')[0];
           }
 
           navigate(boxSelected, $(newBox));
-
 
         })
 
