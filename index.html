@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+  <title>Document</title>
+  
+  <style>
+    .box{
+      width: 200px;
+      height: 300px;
+      display: inline-block;
+      background-position: 50%;
+      background-size: 113%;
+      
+    }
+    .selected{
+    border: 3px solid #00f;
+    }
+    </style>
+</head>
+    
+<body>
+    <div>Lista 1</div>
+    <ul data-listindex="0">
+        <li class="box selected" style="background-image: url('./assets/imgs/friends.jpg')"></li>
+        <li class="box" style="background-image: url('./assets/imgs/homeland.jpg')"></li>
+        <li class="box" style="background-image: url('./assets/imgs/supernatural.jpg')"></li>
+        <li class="box" style="background-image: url('./assets/imgs/robot.jpg')"></li>
+    </ul>
+    
+    <div>Lista 2</div>
+    <ul data-listindex="1">
+      <li class="box" style="background-image: url('./assets/imgs/twd.jpg')"></li>
+      <li class="box" style="background-image: url('./assets/imgs/breakingbad.jpg')"></li>
+      <li class="box" style="background-image: url('./assets/imgs/titans.jpg')"></li>
+      <li class="box" style="background-image: url('./assets/imgs/punisher.jpg')"></li>
+    </ul>
+
+    <script>
+      $(document).ready(function() {
+
+        function navigate(element, nextElement) {
+          if (nextElement.length > 0) {
+            $(element).removeClass('selected');
+            $(nextElement).addClass('selected');
+          } 
+        }
+
+        function navigateList(element, number) {
+          var listSelected = $(element).parent().attr('data-listindex');
+          var newIndex = number + parseInt(listSelected);
+          return $("[data-listindex='" + newIndex + "']");
+        }
+
+        $(document).keyup(function(e) {
+          var boxSelected = $('.selected')[0];
+          var newBox;
+
+          if(e.keyCode == 40) {
+            const list = navigateList(boxSelected, 1);
+            newBox = $(list).find('.box')[0];
+          } else if(e.keyCode == 39) {
+            newBox = $(boxSelected).closest('.box').next();
+          } else if(e.keyCode == 37) {
+            newBox = $(boxSelected).prev();
+          } else {
+            const list = navigateList(boxSelected, -1);
+            newBox = $(list).find('.box')[0];
+          }
+
+          navigate(boxSelected, $(newBox));
+
+
+        })
+
+      })
+    </script>    
+</body>
+</html>
